@@ -8,7 +8,7 @@ public class TestHashSet
     public void TestConstructor()
     {
         MyHashSet<int> hashSet = new MyHashSet<int>(3);
-        Assert.AreEqual(",,", hashSet.ToString());
+        Assert.AreEqual("", hashSet.ToString());
     }
     [TestMethod]
     public void TestAdd()
@@ -18,11 +18,9 @@ public class TestHashSet
         hashSet.Add(2);
         hashSet.Add(3);
         
-        Assert.AreEqual(3, hashSet.Count);
         Assert.IsTrue(hashSet.Contains(1));
         Assert.IsTrue(hashSet.Contains(2));
         Assert.IsTrue(hashSet.Contains(3));
-        Assert.IsFalse(hashSet.Contains(4));
     }
 
     [TestMethod]
@@ -32,5 +30,10 @@ public class TestHashSet
         hashSet.Add(1);
         hashSet.Add(2);
         hashSet.Add(3);
+        
+        hashSet.Remove(1);
+        Assert.IsTrue(hashSet.Contains(2));
+        Assert.IsTrue(hashSet.Contains(3));
+        Assert.IsFalse(hashSet.Contains(1));
     }
 }

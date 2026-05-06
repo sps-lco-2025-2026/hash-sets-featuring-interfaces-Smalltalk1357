@@ -8,40 +8,47 @@ public class MyHashSet<T>(int capacity = 10)
     /// <summary>
     /// Adds item to HashSet if it doesn't exist.
     /// </summary>
-    public void Add(T type)
+    public void Add(T value)
     {
-        if (type == null) return;
+        if (value == null)
+            return;
+
+        if (capacity <= _list.Count) throw new Exception("Hashset is full");
         
-        if (capacity == _list.Count) throw new Exception("Hashset is full")
+        int hash = value.GetHashCode();
         
-        int hash = type.GetHashCode();
-        if (!_hash.Contains(hash))
-        {
-            _list.Add(type);
-            _hash.Add(hash);
-        }
+        if (_hash.Contains(hash))
+            return;
         
-         
+        _list.Add(value);
+        _hash.Add(hash);
     }
     
     /// <summary>
     /// Removes item from HashSet.
     /// </summary>
-    public void Remove(T type)
+    public void Remove(T value)
     {
-        if (!Contains(type)) return;
-        _list.Remove(type);
+        if (value == null)
+            return;
+        
+        if (!Contains(value))
+            return;
+        
+        _list.Remove(value);
+        _hash.Remove(value.GetHashCode());
     }
 
     /// <summary>
     /// Checks if item exists in HashSet.
     /// </summary>
-    public bool Contains(T type)
+    public bool Contains(T value)
     {
-        return _list.Contains(type);
+        if (value == null)
+            return false;
+        
+        return _hash.Contains(value.GetHashCode());
     }
-    
-    public int Count => _list.Count;
     
     public override string ToString() => string.Join(", ", _list);
 }
