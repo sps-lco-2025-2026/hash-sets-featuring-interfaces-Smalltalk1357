@@ -2,7 +2,7 @@
 
 public class MyHashSet<T>(int capacity = 10) where T : notnull
 {
-    private readonly Dictionary<T, int> _list = new(capacity);
+    private readonly Dictionary<int, T> _list = new(capacity);
     
     /// <summary>
     /// Adds item to HashSet if it doesn't exist.
@@ -16,10 +16,7 @@ public class MyHashSet<T>(int capacity = 10) where T : notnull
         
         int hash = value.GetHashCode();
         
-        if (_list.ContainsValue(hash))
-            return;
-        
-        _list.Add(key: value, value: hash);
+        _list.TryAdd(key: hash, value: value);
     }
     
     /// <summary>
