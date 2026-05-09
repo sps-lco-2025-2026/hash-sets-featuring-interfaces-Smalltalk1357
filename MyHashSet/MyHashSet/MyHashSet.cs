@@ -1,14 +1,13 @@
 ﻿namespace MyHashSet;
 
-public class MyHashSet<T>(int capacity = 10)
+public class MyHashSet<T>(int capacity = 10) where T : notnull
 {
-    private readonly List<T> _list = new(capacity);
-    private readonly List<int> _hash = new(capacity);
+    private readonly Dictionary<T, int> _list = new(capacity);
     
     /// <summary>
     /// Adds item to HashSet if it doesn't exist.
     /// </summary>
-    public void Add(T value)
+    public void Add(T? value)
     {
         if (value == null)
             return;
@@ -17,17 +16,16 @@ public class MyHashSet<T>(int capacity = 10)
         
         int hash = value.GetHashCode();
         
-        if (_hash.Contains(hash))
+        if (_list.ContainsValue(hash))
             return;
         
-        _list.Add(value);
-        _hash.Add(hash);
+        _list.Add(key: value, value: hash);
     }
     
     /// <summary>
     /// Removes item from HashSet.
     /// </summary>
-    public void Remove(T value)
+    public void Remove(T? value)
     {
         if (value == null)
             return;
@@ -36,18 +34,17 @@ public class MyHashSet<T>(int capacity = 10)
             return;
         
         _list.Remove(value);
-        _hash.Remove(value.GetHashCode());
     }
 
     /// <summary>
     /// Checks if item exists in HashSet.
     /// </summary>
-    public bool Contains(T value)
+    public bool Contains(T? value)
     {
         if (value == null)
             return false;
         
-        return _hash.Contains(value.GetHashCode());
+        return _list.ContainsValue(value.GetHashCode());
     }
     
     public override string ToString() => string.Join(", ", _list);
