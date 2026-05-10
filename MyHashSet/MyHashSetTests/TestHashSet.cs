@@ -36,4 +36,36 @@ public class TestHashSet
         Assert.IsTrue(hashSet.Contains(3));
         Assert.IsFalse(hashSet.Contains(1));
     }
+    
+    // now using the student class to test hashset
+    [TestMethod]
+    public void TestAddStudent()
+    {
+        MyHashSet<SPSStudent> hashSet = new MyHashSet<SPSStudent>(3);
+        hashSet.Add(new SPSStudent("Alex", 12, "CAH"));
+        hashSet.Add(new SPSStudent("Ben", 13, "CAH"));
+        hashSet.Add(new SPSStudent("Charlie", 12, "CAH"));
+
+        try
+        {
+            hashSet.Add(new SPSStudent("Dan", 13, "CAH"));
+            Assert.Fail();
+        }
+        catch (Exception e)
+        {
+            Assert.AreEqual("Hashset is full", e.Message);
+        }
+    }
+
+    [TestMethod]
+    public void TestDuplicateStudent()
+    {
+        MyHashSet<SPSStudent> hashSet = new MyHashSet<SPSStudent>(10);
+        hashSet.Add(new SPSStudent("Alex", 12, "CAH"));
+        hashSet.Add(new SPSStudent("Ben", 13, "CAH"));
+        hashSet.Add(new SPSStudent("Charlie", 12, "CAH"));
+        
+        hashSet.Add(new SPSStudent("Alex", 12, "CAH"));
+        Assert.AreEqual(3, hashSet.Count);
+    }
 }

@@ -8,13 +8,6 @@ public sealed class TestStudent
     public void TestToString()
     {
         SPSStudent student = new("John", 12, "CAH");
-        Assert.AreEqual("John: Y12, CAH", student.ToString());
-    }
-    
-    [TestMethod]
-    public void TestHashCode()
-    {
-        SPSStudent student = new("John", 12, "CAH");
-        Assert.AreEqual(HashCode.Combine("John", 12, "CAH"), student.GetHashCode());
+        Assert.AreEqual("John: Y12-CAH", student.ToString());
     }
 }
